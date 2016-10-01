@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import Paper from 'material-ui/Paper'
 import Checkbox from 'material-ui/Checkbox';
+import ContentClear from 'material-ui/svg-icons/content/clear';
+import {red500, grey500} from 'material-ui/styles/colors';
 
 const style = {
 	container: {	height: 'auto',
@@ -14,7 +16,10 @@ const style = {
 		lineHeight: '28px',
 		fontSize : '26px',
 		margin : 0,
-		display: 'inline-block'
+		width: '88%',
+		display: 'inline-block',
+		position: 'relative',
+		overflowWrap : 'break-word'
 	},
 	checkbox: {
 		display: 'inline-block',
@@ -32,10 +37,13 @@ class Todoitem extends Component {
     }
 
     render() {
+
+    	let itemCompleted = this.props.completed ? "completed-item" : "";
         return (
 			<Paper style={style.container} zDepth={1}>
-				<Checkbox style={style.checkbox} checked={this.props.completed} />
-				<p style={style.item} className="todo-item">{this.props.text}</p>
+				<Checkbox style={style.checkbox} checked={this.props.completed} onCheck={this.props.toggleTodo} itemID={this.props.itemId} />
+				<span style={style.item} className={itemCompleted}>{this.props.text}</span>
+				<ContentClear color={grey500} hoverColor={red500}/>
 			</Paper>            
         );
     }

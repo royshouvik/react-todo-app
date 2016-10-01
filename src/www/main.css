@@ -16,3 +16,19 @@ h1 {
 	font-size: 26px;
 	margin: 0;
 }*/
+
+/*.todo-item{
+	position: relative;
+}*/
+.completed-item {
+	color: #9f9f9f;
+	text-decoration: line-through;
+}
+/*.completed-item::after {
+	 content:''; 
+	 position:absolute; 
+	 top: 50%; 
+	 left: 0; 
+	 right:0; 
+	 border-bottom: 3px solid #9f9f9f 
+}*/

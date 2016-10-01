@@ -33,8 +33,45 @@ class Main extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      todos: []
+      todos: [],
+      timestamp: Date.now()
     }
+  }
+
+  addTodo(event) {
+    // debugger;
+    // this.setState({textValue: event.target.value + event.key});
+    if(event.keyCode === 13){
+      let newTodo = {
+        id: Date.now(),
+        text: event.target.value,
+        completed: false
+      };
+      let todos = this.state.todos;
+      todos.push(newTodo);
+      this.setState({todos});
+      this.setState({timestamp: Date.now()});
+      // event.target.value = "";
+    }
+  }
+
+
+
+  toggleTodoCompleted(id) {
+    // debugger;
+    let todos = this.state.todos;
+    todos.forEach((todo, index, array) => {
+      if(todo.id == id){
+        console.log(todo);
+        array[index] = {
+          id: id,
+          text: todo.text,
+          completed: !todo.completed
+        }
+      }
+    });
+
+    this.setState({todos});
   }
   componentWillMount(){
     fetch('./data.json', {
@@ -47,14 +84,15 @@ class Main extends Component {
   }
   render() {
       var todoItemList = this.state.todos.map(todo => {
-        console.log(todo);
-      return <Todoitem text={todo.text} completed={todo.completed} key={todo.id} />
+        // console.log(todo);
+      return <Todoitem text={todo.text} completed={todo.completed} 
+                        toggleTodo={this.toggleTodoCompleted.bind(this, todo.id)} key={todo.id} itemID={todo.id}/>
     })
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div style={styles.container}>
           <h1>todos</h1>
-          <TextField style={styles.textfield} hintText={hintText} />
+          <TextField style={styles.textfield} hintText={hintText} onKeyDown={this.addTodo.bind(this)} key={this.state.timestamp}/>
           {todoItemList}
           
         </div>
