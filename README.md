@@ -1,12 +1,12 @@
-# [Material-UI](http://callemall.github.io/material-ui/) - Example Webpack Project
+# React Todo
 
-This is an example project that uses [Material-UI](http://callemall.github.io/material-ui/).
+A Todo application built with React and [Material-UI](http://callemall.github.io/material-ui/).
 
 ## Installation
 
 After cloning the repository, install dependencies:
 ```sh
-cd <project folder>/material-ui/examples/webpack-example
+cd <project folder>
 npm install
 ```
 
