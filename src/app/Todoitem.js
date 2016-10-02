@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 import Paper from 'material-ui/Paper'
 import Checkbox from 'material-ui/Checkbox';
+import TextField from 'material-ui/TextField';
 import ContentClear from 'material-ui/svg-icons/content/clear';
 import {red500, grey500} from 'material-ui/styles/colors';
 
@@ -34,16 +36,72 @@ class Todoitem extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+        	editing: false,
+        	text: this.props.text,
+        	completed: this.props.completed
+        }
     }
 
-    render() {
+    updateTodo() {
+    	// console.log("Updating todo");
 
-    	let itemCompleted = this.props.completed ? "completed-item" : "";
+    	this.setState({editing: !this.state.editing});
+
+    	if(this.state.text === ""){
+    		this.props.deleteTodo();
+    	}
+    	
+    }
+
+    componentDidUpdate(){
+    	if(this.refs.textField){
+    		this.refs.textField.focus();
+    	}
+    }
+
+    updateTodoText(event) {
+    	// debugger;
+    	this.setState({text: event.target.value});
+    	if(this.state.completed){
+    		this.setState({completed: false});
+    	}
+    }
+    handleEnter(event) {
+    	if(event.keyCode === 13){
+    		// debugger;
+    		this.updateTodoText(event);
+    		this.updateTodo();
+    	}
+    }
+
+    componentWillReceiveProps(nextProps) {
+    	this.setState({completed: nextProps.completed});
+    }
+    render() {
+    	let itemCompleted = this.state.completed ? "completed-item" : "";
+    	let textField;
+    	if(this.state.editing){
+    		textField = <TextField style={style.item}
+    							   ref="textField" 
+    							   id={String(this.props.id)} 
+    							   value={this.state.text} 
+    							   onBlur={this.updateTodo.bind(this)}
+    							   onChange={this.updateTodoText.bind(this)}
+    							   onKeyDown={this.handleEnter.bind(this)}
+    							    />;
+    	}
+    	else {
+    		textField = <span style={style.item} className={itemCompleted} 
+    							onDoubleClick={this.updateTodo.bind(this)}>{this.state.text}</span>
+    	}
+
+    	
         return (
-			<Paper style={style.container} zDepth={1}>
-				<Checkbox style={style.checkbox} checked={this.props.completed} onCheck={this.props.toggleTodo} itemID={this.props.itemId} />
-				<span style={style.item} className={itemCompleted}>{this.props.text}</span>
-				<ContentClear color={grey500} hoverColor={red500}/>
+			<Paper style={style.container} zDepth={1} >
+				<Checkbox style={style.checkbox} checked={this.state.completed} onCheck={this.props.toggleTodo}  />
+				{textField}
+				<ContentClear color={grey500} hoverColor={red500} onClick={this.props.deleteTodo} />
 			</Paper>            
         );
     }

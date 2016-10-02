@@ -55,6 +55,19 @@ class Main extends Component {
     }
   }
 
+  deleteTodo(id) {
+    // debugger;
+    let todos = this.state.todos;
+    todos = todos.filter(todo => {
+      return todo.id !== id;
+    });
+    this.setState({todos});
+  }
+
+  // updateTodo(id) {
+  //   console.log("Updating Todo");
+  //   debugger;
+  // }
 
 
   toggleTodoCompleted(id) {
@@ -62,7 +75,7 @@ class Main extends Component {
     let todos = this.state.todos;
     todos.forEach((todo, index, array) => {
       if(todo.id == id){
-        console.log(todo);
+        // console.log(todo);
         array[index] = {
           id: id,
           text: todo.text,
@@ -85,8 +98,12 @@ class Main extends Component {
   render() {
       var todoItemList = this.state.todos.map(todo => {
         // console.log(todo);
-      return <Todoitem text={todo.text} completed={todo.completed} 
-                        toggleTodo={this.toggleTodoCompleted.bind(this, todo.id)} key={todo.id} itemID={todo.id}/>
+      return <Todoitem text={todo.text} 
+                       completed={todo.completed} 
+                       toggleTodo={this.toggleTodoCompleted.bind(this, todo.id)} 
+                       key={todo.id} 
+                       id={todo.id} 
+                       deleteTodo={this.deleteTodo.bind(this, todo.id)}/>
     })
     return (
       <MuiThemeProvider muiTheme={muiTheme}>

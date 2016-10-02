@@ -1,15 +1,15 @@
 [{
   "id": 1,
-  "text": "Praesent blandit lacinia erat.",
+  "text": "Double-click to edit a todo",
   "completed": false
 }, {
   "id": 2,
-  "text": "Nulla tellus. In sagittis dui vel nisl.",
+  "text": "Completed Todos appear striked out",
   "completed": true
 }, {
   "id": 3,
-  "text": "Nulla nisl.",
-  "completed": false
+  "text": "If you update a completed todo, its status would change to incomplete",
+  "completed": true
 }, {
   "id": 4,
   "text": "Pellentesque ultrices mattis odio.",
